@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{1774B213-00D5-4767-931D-DDFB5C01152E}</ProjectGuid>
+    <RootNamespace>BamewareRecode</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
+    <ProjectName>Bameware Legacy</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <LibraryPath>$(SolutionDir)Bameware Recode\LIBS\;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>false</SDLCheck>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>false</SDLCheck>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>TurnOffAllWarnings</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>false</SDLCheck>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <AdditionalOptions>
+      </AdditionalOptions>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <OmitFramePointers>false</OmitFramePointers>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
+      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <LinkTimeCodeGeneration>Default</LinkTimeCodeGeneration>
+      <GenerateMapFile>true</GenerateMapFile>
+      <MapExports>true</MapExports>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="FEATURES\Aimbot.cpp" />
+    <ClCompile Include="FEATURES\Antiaim.cpp" />
+    <ClCompile Include="FEATURES\Autostrafer.cpp" />
+    <ClCompile Include="FEATURES\Autowall.cpp" />
+    <ClCompile Include="FEATURES\Backtracking.cpp" />
+    <ClCompile Include="FEATURES\BoxESP.cpp" />
+    <ClCompile Include="FEATURES\Chams.cpp" />
+    <ClCompile Include="FEATURES\CircleStrafer.cpp" />
+    <ClCompile Include="FEATURES\EnginePrediction.cpp" />
+    <ClCompile Include="FEATURES\EventListeners.cpp" />
+    <ClCompile Include="FEATURES\Fakewalk.cpp" />
+    <ClCompile Include="FEATURES\Glow.cpp" />
+    <ClCompile Include="FEATURES\InGameLogger.cpp" />
+    <ClCompile Include="FEATURES\Legitbot.cpp" />
+    <ClCompile Include="FEATURES\Misc.cpp" />
+    <ClCompile Include="FEATURES\Resolver.cpp" />
+    <ClCompile Include="FEATURES\Configurations.cpp" />
+    <ClCompile Include="FEATURES\SkeletonESP.cpp" />
+    <ClCompile Include="FEATURES\SkinChanger.cpp" />
+    <ClCompile Include="FEATURES\VisualizeBacktrack.cpp" />
+    <ClCompile Include="FEATURES\Visuals.cpp" />
+    <ClCompile Include="FEATURES\VisualsMisc.cpp" />
+    <ClCompile Include="FEATURES\World Textures.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="PPGUI Framework\Menu.cpp" />
+    <ClCompile Include="PPGUI Framework\PPGUI.cpp" />
+    <ClCompile Include="PPGUI Framework\PPGUI_Commands.cpp" />
+    <ClCompile Include="PPGUI Framework\PPGUI_Helpers.cpp" />
+    <ClCompile Include="PPGUI Framework\PPGUI_Defines.cpp" />
+    <ClCompile Include="SDK\sdk.cpp" />
+    <ClCompile Include="UTILS\Debugger.cpp" />
+    <ClCompile Include="UTILS\hooks.cpp" />
+    <ClCompile Include="UTILS\input_handler.cpp" />
+    <ClCompile Include="UTILS\interfaces.cpp" />
+    <ClCompile Include="UTILS\logging.cpp" />
+    <ClCompile Include="UTILS\math.cpp" />
+    <ClCompile Include="UTILS\NetvarManager.cpp" />
+    <ClCompile Include="UTILS\offsets.cpp" />
+    <ClCompile Include="UTILS\render.cpp" />
+    <ClCompile Include="UTILS\utils.cpp" />
+    <ClCompile Include="UTILS\variables.cpp" />
+    <ClCompile Include="UTILS\vmt.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="FEATURES\Aimbot.h" />
+    <ClInclude Include="FEATURES\AntiAim.h" />
+    <ClInclude Include="FEATURES\Autostrafer.h" />
+    <ClInclude Include="FEATURES\Autowall.h" />
+    <ClInclude Include="FEATURES\Backtracking.h" />
+    <ClInclude Include="FEATURES\BoxESP.h" />
+    <ClInclude Include="FEATURES\Chams.h" />
+    <ClInclude Include="FEATURES\CircleStrafer.h" />
+    <ClInclude Include="FEATURES\EnginePrediction.h" />
+    <ClInclude Include="FEATURES\EventListeners.h" />
+    <ClInclude Include="FEATURES\Fakewalk.h" />
+    <ClInclude Include="FEATURES\Glow.h" />
+    <ClInclude Include="FEATURES\hitsound.h" />
+    <ClInclude Include="FEATURES\InGameLogger.h" />
+    <ClInclude Include="FEATURES\Legitbot.h" />
+    <ClInclude Include="FEATURES\Misc.h" />
+    <ClInclude Include="FEATURES\Resolver.h" />
+    <ClInclude Include="FEATURES\Configurations.h" />
+    <ClInclude Include="FEATURES\SkeletonESP.h" />
+    <ClInclude Include="FEATURES\SkinChanger.h" />
+    <ClInclude Include="FEATURES\VisualizeBacktrack.h" />
+    <ClInclude Include="FEATURES\Visuals.h" />
+    <ClInclude Include="FEATURES\VisualsMisc.h" />
+    <ClInclude Include="FEATURES\World Textures.h" />
+    <ClInclude Include="includes.h" />
+    <ClInclude Include="PPGUI Framework\Menu.h" />
+    <ClInclude Include="PPGUI Framework\PPGUI.h" />
+    <ClInclude Include="PPGUI Framework\PPGUI_Commands.h" />
+    <ClInclude Include="PPGUI Framework\PPGUI_Helpers.h" />
+    <ClInclude Include="PPGUI Framework\PPGUI_Defines.h" />
+    <ClInclude Include="SDK\AnimLayer.h" />
+    <ClInclude Include="SDK\CBaseAnimState.h" />
+    <ClInclude Include="SDK\CBaseEntity.h" />
+    <ClInclude Include="SDK\CBaseWeapon.h" />
+    <ClInclude Include="SDK\CClientEntityList.h" />
+    <ClInclude Include="SDK\CClientMode.h" />
+    <ClInclude Include="SDK\CGlobalVars.h" />
+    <ClInclude Include="SDK\CGlowObjectManager.h" />
+    <ClInclude Include="SDK\Checksum_CRC.h" />
+    <ClInclude Include="SDK\CInput.h" />
+    <ClInclude Include="SDK\CInputSystem.h" />
+    <ClInclude Include="SDK\CMoveData.h" />
+    <ClInclude Include="SDK\CMoveHelper.h" />
+    <ClInclude Include="SDK\Collideable.h" />
+    <ClInclude Include="SDK\ConVar.h" />
+    <ClInclude Include="SDK\CPanel.h" />
+    <ClInclude Include="SDK\CPrediction.h" />
+    <ClInclude Include="SDK\CTrace.h" />
+    <ClInclude Include="SDK\CUserCmd.h" />
+    <ClInclude Include="SDK\CViewSetup.h" />
+    <ClInclude Include="SDK\GameEvents.h" />
+    <ClInclude Include="SDK\GameMovement.h" />
+    <ClInclude Include="SDK\IClient.h" />
+    <ClInclude Include="SDK\IEngine.h" />
+    <ClInclude Include="SDK\IMaterial.h" />
+    <ClInclude Include="SDK\INetChannelInfo.h" />
+    <ClInclude Include="SDK\ISurface.h" />
+    <ClInclude Include="SDK\IVDebugOverlay.h" />
+    <ClInclude Include="SDK\ModelInfo.h" />
+    <ClInclude Include="SDK\ModelRender.h" />
+    <ClInclude Include="SDK\NetChannel.h" />
+    <ClInclude Include="SDK\player_info_t.h" />
+    <ClInclude Include="SDK\RecvData.h" />
+    <ClInclude Include="SDK\RenderView.h" />
+    <ClInclude Include="SDK\SurfaceData.h" />
+    <ClInclude Include="UTILS\color.h" />
+    <ClInclude Include="UTILS\CUtlVector.h" />
+    <ClInclude Include="UTILS\Debugger.h" />
+    <ClInclude Include="UTILS\input_handler.h" />
+    <ClInclude Include="UTILS\hooks.h" />
+    <ClInclude Include="UTILS\interfaces.h" />
+    <ClInclude Include="UTILS\logging.h" />
+    <ClInclude Include="UTILS\math.h" />
+    <ClInclude Include="UTILS\NetvarManager.h" />
+    <ClInclude Include="UTILS\offsets.h" />
+    <ClInclude Include="UTILS\quaternion.h" />
+    <ClInclude Include="UTILS\render.h" />
+    <ClInclude Include="UTILS\string_encryption.h" />
+    <ClInclude Include="UTILS\TimeProfiler.h" />
+    <ClInclude Include="UTILS\utils.h" />
+    <ClInclude Include="UTILS\variables.h" />
+    <ClInclude Include="UTILS\vector2D.h" />
+    <ClInclude Include="UTILS\vector3D.h" />
+    <ClInclude Include="UTILS\vmatrix.h" />
+    <ClInclude Include="UTILS\vmt.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
