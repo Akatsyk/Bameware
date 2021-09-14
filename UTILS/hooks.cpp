@@ -168,28 +168,6 @@ namespace HOOKS
 	#define NET_FRAMES_BACKUP 64 // must be power of 2. 
 	#define NET_FRAMES_MASK ( NET_FRAMES_BACKUP - 1 )
 
-	/*int SendDatagram(void* data) {
-		float m_latency = INTERFACES::Engine->GetNetChannelInfo()->GetLatency( 0 );
-		int backup1 = INTERFACES::Engine->GetNetChannelInfo()->m_in_rel_state;
-		int backup2 = INTERFACES::Engine->GetNetChannelInfo()->m_in_seq;
-
-		if (SETTINGS::ragebot_configs.fake_latency) {
-			int ping = SETTINGS::ragebot_configs.fake_latency_amount;
-
-			// the target latency.
-			float correct = max(0.f, (ping / 1000.f) - m_latency - GetLerpTicks( ) );
-
-			INTERFACES::Engine->GetNetChannelInfo()->m_in_seq += 2 * NET_FRAMES_MASK - static_cast<uint32_t>(NET_FRAMES_MASK * correct);
-		}
-
-		int ret = original_send_datagram( data );
-
-		INTERFACES::Engine->GetNetChannelInfo()->m_in_rel_state = backup1;
-		INTERFACES::Engine->GetNetChannelInfo()->m_in_seq = backup2;
-
-		return ret;
-	}*/
-
 	int __fastcall HookedSendDatagram(SDK::NetChannel* ecx, void* edx, void* data)
 	{
 		if (data || !INTERFACES::Engine->IsInGame())
@@ -204,14 +182,17 @@ namespace HOOKS
 		int in_reliable_state = ecx->m_in_rel_state;
 		int in_sequence_num = ecx->m_in_seq;
 
-		if (SETTINGS::ragebot_configs.fake_latency) {
+		//if (SETTINGS::ragebot_configs.fake_latency) {
 			int ping = SETTINGS::ragebot_configs.fake_latency_amount;
-
-			// the target latency.
+		//
+		//	// the target latency.
 			float correct = max(0.f, (ping / 1000.f) - latency - GetLerpTicks() );
-
-			ecx->m_in_seq += 2 * NET_FRAMES_MASK - static_cast<uint32_t>(NET_FRAMES_MASK * correct);
-		}
+		//
+		//	ecx->m_in_seq += 2 * NET_FRAMES_MASK - static_cast<uint32_t>(NET_FRAMES_MASK * correct);
+		//}
+		
+		FEATURES::BACKTRACKING::AddLatency(ecx, correct);
+		
 		int ret = original_send_datagram(ecx, data);
 		
 		ecx->m_in_rel_state = in_reliable_state;
@@ -370,9 +351,6 @@ namespace HOOKS
 
 		original_override_view = client_mode_hook_manager.HookFunction<OverrideViewFn>(18, HookedOverrideView);
 		LOG(enc_char("Successfully hooked virtual function - OverrideView"));
-
-		//original_send_datagram = net_channel_hook_manager.HookFunction< SendDatagramFn >(48, HookedSendDatagram);
-		//LOG(enc_char("Successfully hooked virtual function - SendDatagram"));
 	}
 
 	void UnHook()
