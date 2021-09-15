@@ -25,6 +25,7 @@ namespace HOOKS
 	typedef int(__thiscall* SendDatagramFn)(void* thisptr, void* data);
 	typedef void (__thiscall* OverrideViewFn)(void*, SDK::CViewSetup*);
 	typedef bool (__thiscall* SetupBonesFn)(void*, matrix3x4_t*, int, int, float);
+	typedef bool (__thiscall* GetBoolFn)(void*);
 
 	extern CreateMoveFn original_create_move;
 	extern PaintTraverseFn original_paint_traverse;
@@ -35,6 +36,7 @@ namespace HOOKS
 	extern SendDatagramFn original_send_datagram;
 	extern OverrideViewFn original_override_view;
 	extern SetupBonesFn original_setup_bones;
+	extern GetBoolFn original_net_showfragments;
 
 	extern VMT::VMTHookManager iclient_hook_manager;
 	extern VMT::VMTHookManager panel_hook_manager;

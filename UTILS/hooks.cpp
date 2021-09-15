@@ -64,6 +64,7 @@ namespace HOOKS
 	SendDatagramFn original_send_datagram;
 	OverrideViewFn original_override_view;
 	SetupBonesFn original_setup_bones;
+	GetBoolFn original_net_showfragments;
 
 	VMT::VMTHookManager iclient_hook_manager;
 	VMT::VMTHookManager panel_hook_manager;
@@ -73,6 +74,7 @@ namespace HOOKS
 	VMT::VMTHookManager net_channel_hook_manager;
 	VMT::VMTHookManager client_mode_hook_manager;
 	VMT::VMTHookManager setup_bones_hook_manager;
+	VMT::VMTHookManager net_showfragments;
 
 	int GetLerpTicks()
 	{
@@ -132,7 +134,7 @@ namespace HOOKS
 
 		uintptr_t* pebp;
 		__asm mov pebp, ebp
-		*reinterpret_cast<bool*>(*reinterpret_cast<uintptr_t*>(pebp) - 0x1C) = GLOBAL::should_send_packet;
+		* reinterpret_cast<bool*>(*reinterpret_cast<uintptr_t*>(pebp) - 0x1C) = GLOBAL::should_send_packet;
 
 		return false;
 	}
@@ -165,9 +167,6 @@ namespace HOOKS
 		original_paint_traverse(INTERFACES::Panel, VGUIPanel, ForceRepaint, AllowForce);
 	}
 
-	#define NET_FRAMES_BACKUP 64 // must be power of 2. 
-	#define NET_FRAMES_MASK ( NET_FRAMES_BACKUP - 1 )
-
 	int __fastcall HookedSendDatagram(SDK::NetChannel* ecx, void* edx, void* data)
 	{
 		if (data || !INTERFACES::Engine->IsInGame())
@@ -177,34 +176,27 @@ namespace HOOKS
 		if (!nci)
 			return original_send_datagram(ecx, data);
 
-		float latency = nci->GetLatency(FLOW_OUTGOING);
-
 		int in_reliable_state = ecx->m_in_rel_state;
 		int in_sequence_num = ecx->m_in_seq;
 
-		//if (SETTINGS::ragebot_configs.fake_latency) {
-			int ping = SETTINGS::ragebot_configs.fake_latency_amount;
-		//
-		//	// the target latency.
-			float correct = max(0.f, (ping / 1000.f) - latency - GetLerpTicks() );
-		//
-		//	ecx->m_in_seq += 2 * NET_FRAMES_MASK - static_cast<uint32_t>(NET_FRAMES_MASK * correct);
-		//}
-		
-		FEATURES::BACKTRACKING::AddLatency(ecx, correct);
-		
+		FEATURES::RAGEBOT::backtracking.AddLatency(ecx);
+
 		int ret = original_send_datagram(ecx, data);
-		
+
 		ecx->m_in_rel_state = in_reliable_state;
 		ecx->m_in_seq = in_sequence_num;
-		
+
 		return ret;
 	}
 
-	void LevelInitPostEntity() {
+	void LevelInitPostEntity()
+	{
+		FEATURES::RAGEBOT::backtracking.last_incoming_sequence = 0;
 		auto m_net = INTERFACES::Engine->GetNetChannelInfo();
-		if ( m_net ) {
-			net_channel_hook_manager.Init( m_net );
+		if (m_net) 
+		{
+			net_channel_hook_manager.Restore();
+			net_channel_hook_manager.Init(m_net);
 			original_send_datagram = net_channel_hook_manager.HookFunction< SendDatagramFn >(48, HookedSendDatagram);
 			LOG(enc_char("Successfully hooked virtual function - SendDatagram"));
 		}
@@ -213,12 +205,45 @@ namespace HOOKS
 		original_LevelInitPostEntity();
 	}
 
+	bool __fastcall HookedNetShowFragments(void* pConVar, void* ebx)
+	{
+		if (!INTERFACES::Engine->IsInGame())
+			return original_net_showfragments(pConVar);
+
+		static auto read_sub_channel_data_ret = reinterpret_cast<uintptr_t*>(UTILS::FindSignature(enc_char("engine.dll"), enc_char("85 C0 74 12 53 FF 75 0C 68 ? ? ? ? FF 15 ? ? ? ? 83 C4 0C")));
+		static auto check_receiving_list_ret = reinterpret_cast<uintptr_t*>(UTILS::FindSignature(enc_char("engine.dll"), enc_char("8B 1D ? ? ? ? 85 C0 74 16 FF B6")));
+
+		static uint32_t last_fragment = 0;
+
+		if (_ReturnAddress() == reinterpret_cast<void*>(read_sub_channel_data_ret) && last_fragment > 0)
+		{
+			const auto data = &reinterpret_cast<uint32_t*>(INTERFACES::Engine->GetNetChannel())[0x56];
+			const auto bytes_fragments = reinterpret_cast<uint32_t*>(data)[0x43];
+
+			if (bytes_fragments == last_fragment)
+			{
+				auto& buffer = reinterpret_cast<uint32_t*>(data)[0x42];
+				buffer = 0;
+			}
+		}
+
+		if (_ReturnAddress() == check_receiving_list_ret)
+		{
+			const auto data = &reinterpret_cast<uint32_t*>(INTERFACES::Engine->GetNetChannel())[0x56];
+			const auto bytes_fragments = reinterpret_cast<uint32_t*>(data)[0x43];
+
+			last_fragment = bytes_fragments;
+		}
+
+		return original_net_showfragments(pConVar);
+	}
+
 	void __fastcall HookedFrameStageNotify(void* ecx, void* edx, int stage)
 	{
 		auto local_player = INTERFACES::ClientEntityList->GetClientEntity(INTERFACES::Engine->GetLocalPlayer());
 
 		switch (stage)
-		{
+		{	
 			case FRAME_NET_UPDATE_POSTDATAUPDATE_START:
 
 				FEATURES::RAGEBOT::resolver.DoFSN();
@@ -327,6 +352,7 @@ namespace HOOKS
 		render_view_hook_manager.Init(INTERFACES::RenderView);
 		trace_hook_manager.Init(INTERFACES::Trace);
 		client_mode_hook_manager.Init(INTERFACES::ClientMode);
+		net_showfragments.Init(INTERFACES::cvar->FindVar("net_showfragments"));
 
 		original_create_move = client_mode_hook_manager.HookFunction<CreateMoveFn>(24, HookedCreateMove);
 		LOG(enc_char("Successfully hooked virtual function - CreateMove"));
@@ -351,6 +377,9 @@ namespace HOOKS
 
 		original_override_view = client_mode_hook_manager.HookFunction<OverrideViewFn>(18, HookedOverrideView);
 		LOG(enc_char("Successfully hooked virtual function - OverrideView"));
+
+		original_net_showfragments = net_showfragments.HookFunction<GetBoolFn>(13, HookedNetShowFragments);
+		LOG(enc_char("Successfully hooked virtual function - NetShowFragments"));
 	}
 
 	void UnHook()
@@ -362,6 +391,7 @@ namespace HOOKS
 		trace_hook_manager.Restore();
 		client_mode_hook_manager.Restore();
 		setup_bones_hook_manager.Restore();
+		net_showfragments.Restore();
 
 		FEATURES::MISC::RemoveEventListeners();	
 	}
@@ -397,10 +427,6 @@ namespace HOOKS
 
 		if (!SETTINGS::main_configs.no_smoke_enabled)
 			return;
-
-	//	*(bool*)(uintptr_t(pOut) + 0x1) = true;
-	//	static int32_t smoke_count = *reinterpret_cast<int32_t*>(UTILS::FindSignature("client.dll", "A3 ? ? ? ? 57 8B CB") + 0x1);
-	//	*reinterpret_cast<int32_t*>(smoke_count) = 0;
 	}
 
 	void SequenceHook(const SDK::CRecvProxyData* pData, void* pStruct, void* pOut)

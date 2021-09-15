@@ -80,7 +80,7 @@ namespace FEATURES
 			void RestoreAllToCurrentRecord();
 
 			void UpdateIncomingSequences();
-			void AddLatency(SDK::NetChannel* net_channel, float latency);
+			void AddLatency(SDK::NetChannel* net_channel/*, float latency*/);
 
 			std::vector<Backtracking_Record> GetPriorityRecords(SDK::CBaseEntity* entity); // gets the records in order of most usable, lby update, etcs
 			std::vector<Backtracking_Record> GetValidRecords(SDK::CBaseEntity* entity);
@@ -108,9 +108,9 @@ namespace FEATURES
 			static int GetTickCount(Backtracking_Record);
 			static void SetInterpolationFlags(SDK::CBaseEntity* entity, int flag);
 
+			int last_incoming_sequence = 0;
 		private:
 			bool needs_to_restore[64];
-			int last_incoming_sequence = 0;
 			std::deque<Incoming_Sequence_Record> sequence_records;
 			std::vector<Backtracking_Record> player_records[64];
 			std::vector<Backtracking_Record> shot_at_records;

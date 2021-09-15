@@ -14,6 +14,7 @@
 #include "../SDK/CTrace.h"
 
 #include "../FEATURES/Aimbot.h"
+#include "../FEATURES/Configurations.h"
 
 #include "../UTILS/Debugger.h"
 
@@ -79,11 +80,16 @@ namespace FEATURES
 				sequence_records.pop_back();
 		}
 
-		void CBacktracking::AddLatency(SDK::NetChannel* net_channel, float latency)
+		void CBacktracking::AddLatency(SDK::NetChannel* net_channel/*, float latency*/)
 		{
+			float latency = 0.f;
+
+			if (SETTINGS::ragebot_configs.fake_latency)
+				latency = SETTINGS::ragebot_configs.fake_latency_amount * 0.001f;
 			for (const auto& sequence : sequence_records)
 			{
-				if (UTILS::GetCurtime() - sequence.time >= latency)
+				float delta = UTILS::GetCurtime() - sequence.time;
+				if (delta >= latency)
 				{
 					net_channel->m_in_rel_state = sequence.in_reliable_state;
 					net_channel->m_in_seq = sequence.in_sequence_num;

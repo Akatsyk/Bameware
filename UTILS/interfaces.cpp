@@ -22,6 +22,7 @@ namespace INTERFACES
 	SDK::IMaterialSystem* MaterialSystem;
 	SDK::IPhysicsProps* PhysicsProps;
 	SDK::CClientMode* ClientMode;
+	SDK::CClientMode* NetShowFragments;
 	SDK::IGameEventManager* GameEventManager;
 	SDK::CGlowObjectManager* GlowObjManager;
 	SDK::INetChannelInfo* m_net;
