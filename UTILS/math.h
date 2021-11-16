@@ -20,6 +20,12 @@ namespace MATH
 	void SinCos(float radians, float* sine, float* cosine);
 	void AngleVectors(const Vector& angles, Vector* forward = nullptr, Vector* right = nullptr, Vector* up = nullptr);
 
+	void VectorVectors(const Vector& forward, Vector& right, Vector& up);
+
+	void AngleMatrix(const Vector& angles, matrix3x4_t& matrix);
+	void MatrixCopy(const matrix3x4_t& in, matrix3x4_t& out);
+	void ConcatTransforms(const matrix3x4_t& in1, const matrix3x4_t& in2, matrix3x4_t& out);
+
 	float DotProduct(const float* a, const float* b);
 
 	void VectorTransform(const float* in1, const matrix3x4_t& in2, float* out);

@@ -43,7 +43,7 @@ namespace SDK
 		Vector bbmin;
 		Vector bbmax;
 		int szhitboxnameindex;
-		int m_iPad01[3];
+		Vector rotation; //int m_iPad01[3];
 		float m_flRadius;
 		int m_iPad02[4];
 	};

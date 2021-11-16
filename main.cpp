@@ -4,8 +4,8 @@
 #include "UTILS\hooks.h"
 #include "UTILS\offsets.h"
 #include "UTILS\NetvarManager.h"
-#include "FEATURES\EventListeners.h"
-#include "FEATURES\Misc.h"
+#include "BACKEND\MISC\FEATURES\EVENT\EventListeners.h"
+#include "BACKEND\MISC\Misc.h"
 
 #include "SDK\IEngine.h"
 

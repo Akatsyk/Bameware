@@ -16,6 +16,7 @@ namespace GLOBAL
 	bool should_send_packet;
 	bool disable_fake_lag;
 	bool is_fakewalking;
+	bool is_peeking;
 	bool should_choke_packets;
 	bool is_freestanding;
 	bool is_edging;

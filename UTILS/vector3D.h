@@ -30,6 +30,18 @@ public:
 		z = Z;
 	};
 
+	FORCEINLINE void  Set(float x = 0.0f, float y = 0.0f, float z = 0.0f)
+	{
+		this->x = x;
+		this->y = y;
+		this->z = z;
+	}
+
+	FORCEINLINE Vector(const float* v)
+	{
+		this->Set(v[0], v[1], v[2]);
+	}
+
 	float operator[](int i) const
 	{
 		if (i == 0)
@@ -135,6 +147,15 @@ public:
 		return *this;
 	}
 
+	inline Vector& operator /= (float fl)
+	{
+		this->x /= fl;
+		this->y /= fl;
+		this->z /= fl;
+
+		return (*this);
+	}
+
 	inline void operator*=(const float& v)
 	{
 		x *= v;
@@ -150,6 +171,29 @@ public:
 	float Length(void) const
 	{
 		return sqrt(x * x + y * y + z * z);
+	}
+
+	FORCEINLINE Vector Cross(const Vector& v)
+	{
+		return { this->y * v.z - this->z * v.y,
+				 this->z * v.x - this->x * v.z,
+				 this->x * v.y - this->y * v.x };
+	}
+
+	FORCEINLINE Vector  Normalized() const
+	{
+		Vector vec(*this);
+
+		float radius = sqrtf(vec.x * vec.x + vec.y * vec.y + vec.z * vec.z);
+
+		// FLT_EPSILON is added to the radius to eliminate the possibility of divide by zero.
+		float iradius = 1.f / (radius + FLT_EPSILON);
+
+		vec.x *= iradius;
+		vec.y *= iradius;
+		vec.z *= iradius;
+
+		return vec;
 	}
 
 	inline float Length2D() const
@@ -196,5 +240,37 @@ public:
 		this->z -= floorf(this->z / 360.0f + 0.5f) * 360.0f;
 
 		return *this;
+	}
+
+	FORCEINLINE void  ToVectors(Vector& right, Vector& up) { // VectorVectors
+		Vector tmp;
+		if (x == 0.f && y == 0.f) {
+			// pitch 90 degrees up/down from identity
+			right[0] = 0.f;
+			right[1] = -1.f;
+			right[2] = 0.f;
+			up[0] = -z;
+			up[1] = 0.f;
+			up[2] = 0.f;
+		}
+		else {
+			tmp[0] = 0.f;
+			tmp[1] = 0.f;
+			tmp[2] = 1.0f;
+			right = Cross(tmp);
+			up = right.Cross(*this);
+
+			right.Normalize();
+			up.Normalize();
+		}
+	}
+
+	FORCEINLINE float  Normalize()
+	{
+		float len = Length();
+
+		(*this) /= (len + std::numeric_limits< float >::epsilon());
+
+		return len;
 	}
 };

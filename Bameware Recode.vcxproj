@@ -28,13 +28,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
@@ -71,6 +71,9 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
+    <LibraryPath>$(SolutionDir)Bameware Recode\LIBS\;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LibraryPath>$(SolutionDir)Bameware Recode\LIBS\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -138,35 +141,35 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="FEATURES\Aimbot.cpp" />
-    <ClCompile Include="FEATURES\Antiaim.cpp" />
-    <ClCompile Include="FEATURES\Autostrafer.cpp" />
-    <ClCompile Include="FEATURES\Autowall.cpp" />
-    <ClCompile Include="FEATURES\Backtracking.cpp" />
-    <ClCompile Include="FEATURES\BoxESP.cpp" />
-    <ClCompile Include="FEATURES\Chams.cpp" />
-    <ClCompile Include="FEATURES\CircleStrafer.cpp" />
-    <ClCompile Include="FEATURES\EnginePrediction.cpp" />
-    <ClCompile Include="FEATURES\EventListeners.cpp" />
-    <ClCompile Include="FEATURES\Fakewalk.cpp" />
-    <ClCompile Include="FEATURES\Glow.cpp" />
-    <ClCompile Include="FEATURES\InGameLogger.cpp" />
-    <ClCompile Include="FEATURES\Legitbot.cpp" />
-    <ClCompile Include="FEATURES\Misc.cpp" />
-    <ClCompile Include="FEATURES\Resolver.cpp" />
-    <ClCompile Include="FEATURES\Configurations.cpp" />
-    <ClCompile Include="FEATURES\SkeletonESP.cpp" />
-    <ClCompile Include="FEATURES\SkinChanger.cpp" />
-    <ClCompile Include="FEATURES\VisualizeBacktrack.cpp" />
-    <ClCompile Include="FEATURES\Visuals.cpp" />
-    <ClCompile Include="FEATURES\VisualsMisc.cpp" />
-    <ClCompile Include="FEATURES\World Textures.cpp" />
+    <ClCompile Include="BACKEND\MAIN\RAGEBOT\AIMBOT\Aimbot.cpp" />
+    <ClCompile Include="BACKEND\MAIN\RAGEBOT\ANTIAIM\Antiaim.cpp" />
+    <ClCompile Include="BACKEND\MISC\FEATURES\MOVEMENT\Autostrafer.cpp" />
+    <ClCompile Include="BACKEND\MAIN\RAGEBOT\AUTOWALL\Autowall.cpp" />
+    <ClCompile Include="BACKEND\MAIN\RAGEBOT\BACKTRACK\Backtracking.cpp" />
+    <ClCompile Include="BACKEND\VISUALS\MAIN\BoxESP.cpp" />
+    <ClCompile Include="BACKEND\VISUALS\CHAMS\Chams.cpp" />
+    <ClCompile Include="BACKEND\MISC\FEATURES\MOVEMENT\CircleStrafer.cpp" />
+    <ClCompile Include="BACKEND\MAIN\PREDICTION\EnginePrediction.cpp" />
+    <ClCompile Include="BACKEND\MISC\FEATURES\EVENT\EventListeners.cpp" />
+    <ClCompile Include="BACKEND\MISC\FEATURES\MOVEMENT\Fakewalk.cpp" />
+    <ClCompile Include="BACKEND\VISUALS\OTHER\Glow.cpp" />
+    <ClCompile Include="BACKEND\MISC\FEATURES\EVENT\InGameLogger.cpp" />
+    <ClCompile Include="BACKEND\MAIN\LEGITBOT\Legitbot.cpp" />
+    <ClCompile Include="BACKEND\MISC\Misc.cpp" />
+    <ClCompile Include="BACKEND\MAIN\RAGEBOT\RESOLVER\Resolver.cpp" />
+    <ClCompile Include="BACKEND\CFG\Configurations.cpp" />
+    <ClCompile Include="BACKEND\VISUALS\OTHER\SkeletonESP.cpp" />
+    <ClCompile Include="BACKEND\MISC\FEATURES\SKINCHANGER\SkinChanger.cpp" />
+    <ClCompile Include="BACKEND\VISUALS\OTHER\VisualizeBacktrack.cpp" />
+    <ClCompile Include="BACKEND\VISUALS\MAIN\Visuals.cpp" />
+    <ClCompile Include="BACKEND\VISUALS\OTHER\VisualsMisc.cpp" />
+    <ClCompile Include="BACKEND\VISUALS\WORLD\World Textures.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="PPGUI Framework\Menu.cpp" />
-    <ClCompile Include="PPGUI Framework\PPGUI.cpp" />
-    <ClCompile Include="PPGUI Framework\PPGUI_Commands.cpp" />
-    <ClCompile Include="PPGUI Framework\PPGUI_Helpers.cpp" />
-    <ClCompile Include="PPGUI Framework\PPGUI_Defines.cpp" />
+    <ClCompile Include="FRONTEND\Menu.cpp" />
+    <ClCompile Include="FRONTEND\PPGUI.cpp" />
+    <ClCompile Include="FRONTEND\PPGUI_Commands.cpp" />
+    <ClCompile Include="FRONTEND\PPGUI_Helpers.cpp" />
+    <ClCompile Include="FRONTEND\PPGUI_Defines.cpp" />
     <ClCompile Include="SDK\sdk.cpp" />
     <ClCompile Include="UTILS\Debugger.cpp" />
     <ClCompile Include="UTILS\hooks.cpp" />
@@ -182,36 +185,36 @@
     <ClCompile Include="UTILS\vmt.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="FEATURES\Aimbot.h" />
-    <ClInclude Include="FEATURES\AntiAim.h" />
-    <ClInclude Include="FEATURES\Autostrafer.h" />
-    <ClInclude Include="FEATURES\Autowall.h" />
-    <ClInclude Include="FEATURES\Backtracking.h" />
-    <ClInclude Include="FEATURES\BoxESP.h" />
-    <ClInclude Include="FEATURES\Chams.h" />
-    <ClInclude Include="FEATURES\CircleStrafer.h" />
-    <ClInclude Include="FEATURES\EnginePrediction.h" />
-    <ClInclude Include="FEATURES\EventListeners.h" />
-    <ClInclude Include="FEATURES\Fakewalk.h" />
-    <ClInclude Include="FEATURES\Glow.h" />
-    <ClInclude Include="FEATURES\hitsound.h" />
-    <ClInclude Include="FEATURES\InGameLogger.h" />
-    <ClInclude Include="FEATURES\Legitbot.h" />
-    <ClInclude Include="FEATURES\Misc.h" />
-    <ClInclude Include="FEATURES\Resolver.h" />
-    <ClInclude Include="FEATURES\Configurations.h" />
-    <ClInclude Include="FEATURES\SkeletonESP.h" />
-    <ClInclude Include="FEATURES\SkinChanger.h" />
-    <ClInclude Include="FEATURES\VisualizeBacktrack.h" />
-    <ClInclude Include="FEATURES\Visuals.h" />
-    <ClInclude Include="FEATURES\VisualsMisc.h" />
-    <ClInclude Include="FEATURES\World Textures.h" />
+    <ClInclude Include="BACKEND\MAIN\RAGEBOT\AIMBOT\Aimbot.h" />
+    <ClInclude Include="BACKEND\MAIN\RAGEBOT\ANTIAIM\AntiAim.h" />
+    <ClInclude Include="BACKEND\MISC\FEATURES\MOVEMENT\Autostrafer.h" />
+    <ClInclude Include="BACKEND\MAIN\RAGEBOT\AUTOWALL\Autowall.h" />
+    <ClInclude Include="BACKEND\MAIN\RAGEBOT\BACKTRACK\Backtracking.h" />
+    <ClInclude Include="BACKEND\VISUALS\MAIN\BoxESP.h" />
+    <ClInclude Include="BACKEND\VISUALS\CHAMS\Chams.h" />
+    <ClInclude Include="BACKEND\MISC\FEATURES\MOVEMENT\CircleStrafer.h" />
+    <ClInclude Include="BACKEND\MAIN\PREDICTION\EnginePrediction.h" />
+    <ClInclude Include="BACKEND\MISC\FEATURES\EVENT\EventListeners.h" />
+    <ClInclude Include="BACKEND\MISC\FEATURES\MOVEMENT\Fakewalk.h" />
+    <ClInclude Include="BACKEND\VISUALS\OTHER\Glow.h" />
+    <ClInclude Include="BACKEND\MISC\hitsound.h" />
+    <ClInclude Include="BACKEND\MISC\FEATURES\EVENT\InGameLogger.h" />
+    <ClInclude Include="BACKEND\MAIN\LEGITBOT\Legitbot.h" />
+    <ClInclude Include="BACKEND\MISC\Misc.h" />
+    <ClInclude Include="BACKEND\MAIN\RAGEBOT\RESOLVER\Resolver.h" />
+    <ClInclude Include="BACKEND\CFG\Configurations.h" />
+    <ClInclude Include="BACKEND\VISUALS\OTHER\SkeletonESP.h" />
+    <ClInclude Include="BACKEND\MISC\FEATURES\SKINCHANGER\SkinChanger.h" />
+    <ClInclude Include="BACKEND\VISUALS\OTHER\VisualizeBacktrack.h" />
+    <ClInclude Include="BACKEND\VISUALS\MAIN\Visuals.h" />
+    <ClInclude Include="BACKEND\VISUALS\OTHER\VisualsMisc.h" />
+    <ClInclude Include="BACKEND\VISUALS\WORLD\World Textures.h" />
     <ClInclude Include="includes.h" />
-    <ClInclude Include="PPGUI Framework\Menu.h" />
-    <ClInclude Include="PPGUI Framework\PPGUI.h" />
-    <ClInclude Include="PPGUI Framework\PPGUI_Commands.h" />
-    <ClInclude Include="PPGUI Framework\PPGUI_Helpers.h" />
-    <ClInclude Include="PPGUI Framework\PPGUI_Defines.h" />
+    <ClInclude Include="FRONTEND\Menu.h" />
+    <ClInclude Include="FRONTEND\PPGUI.h" />
+    <ClInclude Include="FRONTEND\PPGUI_Commands.h" />
+    <ClInclude Include="FRONTEND\PPGUI_Helpers.h" />
+    <ClInclude Include="FRONTEND\PPGUI_Defines.h" />
     <ClInclude Include="SDK\AnimLayer.h" />
     <ClInclude Include="SDK\CBaseAnimState.h" />
     <ClInclude Include="SDK\CBaseEntity.h" />

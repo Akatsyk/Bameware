@@ -4,6 +4,17 @@
 
 namespace MATH
 {
+#define  Assert( _exp )										((void)0)
+#define  AssertAligned( ptr )								((void)0)
+#define  AssertOnce( _exp )									((void)0)
+#define  AssertMsg( _exp, _msg )							((void)0)
+#define  AssertMsgOnce( _exp, _msg )						((void)0)
+#define  AssertFunc( _exp, _f )								((void)0)
+#define  AssertEquals( _exp, _expectedValue )				((void)0)
+#define  AssertFloatEquals( _exp, _expectedValue, _tol )	((void)0)
+#define  Verify( _exp )										(_exp)
+#define  VerifyEquals( _exp, _expectedValue )           	(_exp)
+
 	void VectorAngles(const Vector& forward, Vector& angles)
 	{
 		float tmp, yaw, pitch;
@@ -64,6 +75,116 @@ namespace MATH
 			up->y = (cr * sp * sy + -sr * cy);
 			up->z = cr * cp;
 		}
+	}
+
+	inline void CrossProduct(const Vector& a, const Vector& b, Vector& result)
+	{
+		CHECK_VALID(a);
+		CHECK_VALID(b);
+		Assert(&a != &result);
+		Assert(&b != &result);
+		result.x = a.y * b.z - a.z * b.y;
+		result.y = a.z * b.x - a.x * b.z;
+		result.z = a.x * b.y - a.y * b.x;
+	}
+
+	void VectorVectors(const Vector& forward, Vector& right, Vector& up)
+	{
+		Vector tmp;
+
+		if (fabs(forward[0]) < 1e-6 && fabs(forward[1]) < 1e-6)
+		{
+			// pitch 90 degrees up/down from identity
+			right[0] = 0;
+			right[1] = -1;
+			right[2] = 0;
+			up[0] = -forward[2];
+			up[1] = 0;
+			up[2] = 0;
+		}
+		else
+		{
+			tmp[0] = 0; tmp[1] = 0; tmp[2] = 1.0;
+			CrossProduct(forward, tmp, right);
+			right.Normalize();
+			CrossProduct(right, forward, up);
+			up.Normalize();
+		}
+	}
+
+	void AngleMatrix(const Vector& angles, matrix3x4_t& matrix)
+	{
+		float sr, sp, sy, cr, cp, cy;
+
+		SinCos(DEG2RAD(angles.y), &sy, &cy);
+		SinCos(DEG2RAD(angles.x), &sp, &cp);
+
+		// matrix = (YAW * PITCH) * ROLL
+		matrix[0][0] = cp * cy;
+		matrix[1][0] = cp * sy;
+		matrix[2][0] = -sp;
+
+		// NOTE: Do not optimize this to reduce multiplies! optimizer bug will screw this up.
+		matrix[0][1] = sr * sp * cy + cr * -sy;
+		matrix[1][1] = sr * sp * sy + cr * cy;
+		matrix[2][1] = sr * cp;
+		matrix[0][2] = (cr * sp * cy + -sr * -sy);
+		matrix[1][2] = (cr * sp * sy + -sr * cy);
+		matrix[2][2] = cr * cp;
+
+		matrix[0][3] = 0.0f;
+		matrix[1][3] = 0.0f;
+		matrix[2][3] = 0.0f;
+	}
+
+	void MatrixCopy(const matrix3x4_t& in, matrix3x4_t& out)
+	{
+		//Assert(s_bMathlibInitialized);
+		memcpy(out.Base(), in.Base(), sizeof(float) * 3 * 4);
+	}
+
+	void ConcatTransforms(const matrix3x4_t& in1, const matrix3x4_t& in2, matrix3x4_t& out)
+	{
+		//Assert(s_bMathlibInitialized);
+		if (&in1 == &out)
+		{
+			matrix3x4_t in1b;
+			MatrixCopy(in1, in1b);
+			ConcatTransforms(in1b, in2, out);
+			return;
+		}
+		if (&in2 == &out)
+		{
+			matrix3x4_t in2b;
+			MatrixCopy(in2, in2b);
+			ConcatTransforms(in1, in2b, out);
+			return;
+		}
+
+		out[0][0] = in1[0][0] * in2[0][0] + in1[0][1] * in2[1][0] +
+			in1[0][2] * in2[2][0];
+		out[0][1] = in1[0][0] * in2[0][1] + in1[0][1] * in2[1][1] +
+			in1[0][2] * in2[2][1];
+		out[0][2] = in1[0][0] * in2[0][2] + in1[0][1] * in2[1][2] +
+			in1[0][2] * in2[2][2];
+		out[0][3] = in1[0][0] * in2[0][3] + in1[0][1] * in2[1][3] +
+			in1[0][2] * in2[2][3] + in1[0][3];
+		out[1][0] = in1[1][0] * in2[0][0] + in1[1][1] * in2[1][0] +
+			in1[1][2] * in2[2][0];
+		out[1][1] = in1[1][0] * in2[0][1] + in1[1][1] * in2[1][1] +
+			in1[1][2] * in2[2][1];
+		out[1][2] = in1[1][0] * in2[0][2] + in1[1][1] * in2[1][2] +
+			in1[1][2] * in2[2][2];
+		out[1][3] = in1[1][0] * in2[0][3] + in1[1][1] * in2[1][3] +
+			in1[1][2] * in2[2][3] + in1[1][3];
+		out[2][0] = in1[2][0] * in2[0][0] + in1[2][1] * in2[1][0] +
+			in1[2][2] * in2[2][0];
+		out[2][1] = in1[2][0] * in2[0][1] + in1[2][1] * in2[1][1] +
+			in1[2][2] * in2[2][1];
+		out[2][2] = in1[2][0] * in2[0][2] + in1[2][1] * in2[1][2] +
+			in1[2][2] * in2[2][2];
+		out[2][3] = in1[2][0] * in2[0][3] + in1[2][1] * in2[1][3] +
+			in1[2][2] * in2[2][3] + in1[2][3];
 	}
 
 	__forceinline float DotProduct(const float* a, const float* b)

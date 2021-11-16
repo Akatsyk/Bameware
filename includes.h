@@ -210,14 +210,73 @@
 #include "UTILS\quaternion.h"
 #include "UTILS\math.h"
 #include "UTILS\logging.h"
-//#include "UTILS\general_utils.h"
 #include "UTILS\utils.h"
 #include "UTILS\color.h"
 #include "UTILS\string_encryption.h"
-
 #include "UTILS\input_handler.h"
 #include "UTILS\variables.h"
 
+// Feature includes:
+/*
+* 1. CFG.
+* 2. LEGITBOT FUNCTIONS.
+* 3. PREDICTION
+* 4. RAGEBOT FUNCTIONS.
+*	A. AIMBOT.
+*	B. ANTIAIM.
+*	C. AUTOWALL.
+*	D. BACKTRACK.
+*	E. RESOLVER.
+* 5. MISC FUNCTIONS.
+*	A. EVENT.
+*		- EVENT LISTENER.
+*		- INGAME LOGGER.
+*	B. MOVEMENT.
+*		- AUTOSTRAFER.
+*		- CIRCLE STRAFER.
+*		- FAKEWALK.
+*	C. SKINCHANGER.
+*	D. MISC.
+* 6. VISUAL FUNCTIONS.
+*	A. CHAMS.
+*	B. MAIN.
+*		- ESP.
+*		- VISUASL.
+*	C. OTHER.
+*		- GLOW.
+*		- SKELETON ESP.
+*		- VISUALIZE BACKTRACK.
+*		- VISUALS MISC.
+*	D. WORLD
+*/
+
+#include "BACKEND\CFG\Configurations.h"
+
+#include "BACKEND\MAIN\LEGITBOT\Legitbot.h"
+
+#include "BACKEND\MAIN\PREDICTION\EnginePrediction.h"
+#include "BACKEND\MAIN\RAGEBOT\AIMBOT\Aimbot.h"
+#include "BACKEND\MAIN\RAGEBOT\ANTIAIM\Antiaim.h"
+#include "BACKEND\MAIN\RAGEBOT\AUTOWALL\Autowall.h"
+#include "BACKEND\MAIN\RAGEBOT\BACKTRACK\Backtracking.h"
+#include "BACKEND\MAIN\RAGEBOT\RESOLVER\Resolver.h"
+
+#include "BACKEND\MISC\FEATURES\EVENT\EventListeners.h"
+#include "BACKEND\MISC\FEATURES\EVENT\InGameLogger.h"
+#include "BACKEND\MISC\FEATURES\MOVEMENT\Autostrafer.h"
+#include "BACKEND\MISC\FEATURES\MOVEMENT\CircleStrafer.h"
+#include "BACKEND\MISC\FEATURES\MOVEMENT\Fakewalk.h"
+#include "BACKEND\MISC\FEATURES\SKINCHANGER\SkinChanger.h"
+#include "BACKEND\MISC\Misc.h"
+
+#include "BACKEND\VISUALS\CHAMS\Chams.h"
+#include "BACKEND\VISUALS\MAIN\BoxESP.h"
+#include "BACKEND\VISUALS\MAIN\Visuals.h"
+#include "BACKEND\VISUALS\OTHER\Glow.h"
+#include "BACKEND\VISUALS\OTHER\SkeletonESP.h"
+#include "BACKEND\VISUALS\OTHER\VisualizeBacktrack.h"
+#include "BACKEND\VISUALS\OTHER\VisualsMisc.h"
+#include "BACKEND\VISUALS\WORLD\World Textures.h"
 // for fsn
 enum ClientFrameStage_t
 {

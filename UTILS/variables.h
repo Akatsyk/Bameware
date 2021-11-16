@@ -13,6 +13,7 @@ namespace GLOBAL
 	extern bool should_send_packet;
 	extern bool disable_fake_lag;
 	extern bool is_fakewalking;
+	extern bool is_peeking;
 	extern bool should_choke_packets;
 	extern bool is_freestanding;
 	extern bool is_edging;
